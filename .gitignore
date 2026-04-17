@@ -3,6 +3,12 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# datasets
+*.csv
+*.xlsx
+*.parquet
+*.zip
+
 # C extensions
 *.so
 
