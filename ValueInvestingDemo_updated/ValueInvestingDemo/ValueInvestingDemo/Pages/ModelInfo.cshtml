@@ -1,0 +1,130 @@
+@page
+@model ValueInvestingDemo.Pages.ModelInfoModel
+@{
+    ViewData["Title"] = "Model Info";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4 p-md-5">
+                <h1 class="h3 fw-semibold mb-3">Model information</h1>
+                <p class="text-muted mb-0">
+                    This page documents the trained model, the target variable, the input features and the main limitations.
+                    It supports transparency, explainability and transferability for LO5 Manage &amp; Control.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-12 col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-body">
+                        <div class="text-muted mb-1">Model type</div>
+                        <div class="h5 fw-semibold mb-0">Linear Regression</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-body">
+                        <div class="text-muted mb-1">Target variable</div>
+                        <div class="h5 fw-semibold mb-0">Future Adj Close</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-body">
+                        <div class="text-muted mb-1">Prediction period</div>
+                        <div class="h5 fw-semibold mb-0">Approximately 1 year ahead</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4">
+                <h2 class="h4 fw-semibold mb-3">Input features</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Feature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.FeatureNames.Count; i++)
+                            {
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@Model.FeatureNames[i]</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4">
+                <h2 class="h4 fw-semibold mb-3">Evaluation metrics</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Target</th>
+                                <th>MAE</th>
+                                <th>RMSE</th>
+                                <th>R²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Future Adj Close</td>
+                                <td>19.312589</td>
+                                <td>38.611335</td>
+                                <td>0.892099</td>
+                            </tr>
+                            <tr>
+                                <td>Naive baseline</td>
+                                <td>19.460854</td>
+                                <td>39.735275</td>
+                                <td>0.885727</td>
+                            </tr>
+                            <tr>
+                                <td>Without current Adj. Close</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>0.169833</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4">
+                <h2 class="h4 fw-semibold mb-3">Pipeline</h2>
+                <div class="p-3 bg-light rounded-3 font-monospace">
+                    User input features → C# Razor PageModel → PredictionService → PythonPredictionRepo → predict.py → joblib model → Future Adj Close prediction
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body p-4">
+                <h2 class="h4 fw-semibold mb-3">Limitations</h2>
+                <p>
+                    The high R² for Future Adj Close is largely explained by current Adjusted Close. A naive baseline that predicts the future price as equal to the current price performs almost as well as the Linear Regression model.
+                </p>
+                <p class="mb-0">
+                    The result should therefore be interpreted as a demonstration of model deployment and inference, not as a reliable financial prediction system.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

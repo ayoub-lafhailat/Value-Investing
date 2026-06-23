@@ -1,0 +1,25 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.footer {
+    background-color: #ffffff;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, .15);
+}
+
+.metric-card {
+    min-height: 120px;
+}

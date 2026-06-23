@@ -1,0 +1,147 @@
+@page
+@model ValueInvestingDemo.Pages.PredictionModel
+@{
+    ViewData["Title"] = "Prediction";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex align-items-start justify-content-between gap-3 mb-4 flex-wrap">
+                    <div>
+                        <h1 class="h3 fw-semibold mb-1">Prediction demo</h1>
+                        <p class="text-muted mb-0">Enter financial values or load example data to predict Future Adjusted Close.</p>
+                    </div>
+                </div>
+
+                <form method="post" asp-page-handler="LoadExample" class="row g-2 align-items-end mb-4">
+                    <div class="col-12 col-md-8">
+                        <label asp-for="SelectedExampleIndex" class="form-label fw-medium">Example input</label>
+                        <select asp-for="SelectedExampleIndex" class="form-select form-select-lg">
+                            @for (int i = 0; i < Model.ExampleInputs.Count; i++)
+                            {
+                                <option value="@i">Example @(i + 1) - Adj. Close @Model.ExampleInputs[i].AdjClose.ToString("0.00")</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <button type="submit" class="btn btn-outline-primary btn-lg w-100 rounded-3">Load example</button>
+                    </div>
+                </form>
+
+                <form method="post" asp-page-handler="Predict">
+                    <div asp-validation-summary="All" class="alert alert-danger py-2" role="alert"></div>
+
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.AdjClose" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.AdjClose" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.AdjClose" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.Volume" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.Volume" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.Volume" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.MarketCap" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.MarketCap" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.MarketCap" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.PriceToEarningsRatioTtm" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.PriceToEarningsRatioTtm" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.PriceToEarningsRatioTtm" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.PriceToSalesRatioTtm" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.PriceToSalesRatioTtm" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.PriceToSalesRatioTtm" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.PriceToBookValue" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.PriceToBookValue" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.PriceToBookValue" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.PriceToFreeCashFlowTtm" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.PriceToFreeCashFlowTtm" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.PriceToFreeCashFlowTtm" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.EvEbitda" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.EvEbitda" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.EvEbitda" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.EvSales" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.EvSales" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.EvSales" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.BookToMarketValue" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.BookToMarketValue" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.BookToMarketValue" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.OperatingIncomeEv" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.OperatingIncomeEv" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.OperatingIncomeEv" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PredictionView.AltmanZScore" class="form-label fw-medium"></label>
+                            <input asp-for="PredictionView.AltmanZScore" class="form-control form-control-lg" />
+                            <span asp-validation-for="PredictionView.AltmanZScore" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg flex-fill rounded-3">Predict Future Adj. Close</button>
+                        <a asp-page="/Index" class="btn btn-outline-secondary btn-lg rounded-3">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @if (Model.PredictionResult != null)
+        {
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 fw-semibold mb-3">Prediction result</h2>
+                    <div class="row g-3 align-items-stretch">
+                        <div class="col-12 col-md-6">
+                            <div class="border rounded-4 p-4 h-100 bg-white">
+                                <div class="text-muted mb-1">Predicted Future Adjusted Close</div>
+                                <div class="display-6 fw-semibold">@Model.PredictionResult.PredictedFutureAdjClose.ToString("0.00")</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="border rounded-4 p-4 h-100 bg-white">
+                                <div class="text-muted mb-1">Prediction type</div>
+                                <div class="h4 fw-semibold mb-0">
+                                    @(Model.PredictionResult.IsFallbackPrediction ? "Naive fallback" : "Trained model")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.PredictionResult.Warning))
+                    {
+                        <div class="alert alert-warning rounded-3 mt-4" role="alert">
+                            @Model.PredictionResult.Warning
+                        </div>
+                    }
+
+                    <p class="text-muted mt-4 mb-0">
+                        The target variable is not entered by the user. It was engineered during training only. In this demo, the user only provides model features and the trained model returns an inference result.
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

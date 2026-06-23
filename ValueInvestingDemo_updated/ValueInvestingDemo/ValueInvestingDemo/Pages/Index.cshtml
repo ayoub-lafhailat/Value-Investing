@@ -1,0 +1,55 @@
+@page
+@model ValueInvestingDemo.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4 p-md-5">
+                <h1 class="display-6 fw-semibold mb-3">Value Investing Model Demo</h1>
+                <p class="lead mb-4">
+                    This web application demonstrates a trained value investing model outside of the notebook environment.
+                    The user provides financial input values, after which the model predicts the future adjusted close price.
+                </p>
+
+                <div class="alert alert-warning rounded-3" role="alert">
+                    This prototype is made for educational demonstration purposes only. It is not financial advice.
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <a asp-page="/Prediction" class="btn btn-primary btn-lg rounded-3">Open prediction demo</a>
+                    <a asp-page="/ModelInfo" class="btn btn-outline-secondary btn-lg rounded-3">View model information</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12 col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 metric-card">
+                    <div class="card-body">
+                        <h2 class="h5 fw-semibold">Transparency</h2>
+                        <p class="mb-0 text-muted">The app documents the input features, target variable, model metrics and inference flow.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 metric-card">
+                    <div class="card-body">
+                        <h2 class="h5 fw-semibold">Explainability</h2>
+                        <p class="mb-0 text-muted">The result page shows what is predicted and explains the limitations of the model.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 metric-card">
+                    <div class="card-body">
+                        <h2 class="h5 fw-semibold">Transferability</h2>
+                        <p class="mb-0 text-muted">The model is used through a separate domain service and Python repository layer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
